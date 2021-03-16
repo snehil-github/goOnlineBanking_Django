@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    {% include 'head.html' %}
+</head>
+<body>
+
+<!--{% include 'main_header.html' %}-->
+{% include 'main_menu.html' %}
+
+<div>
+    <form action="register" method="post">
+        <center><h2>First Time User Registration</h2></center>
+        {% csrf_token %}
+        <input type="text"
+               name="name"
+               required=""
+               placeholder="Name *"
+               autofocus=""><br>
+        <input type="email"
+               name="email"
+               required=""
+               placeholder="Email *"><br>
+        <input type="password"
+               name="pwd1"
+               required=""
+               placeholder="Enter Password *"><br>
+        <input type="password"
+               name="pwd2"
+               required=""
+               placeholder="Re-enter Password *"><br>
+        <input type="text"
+               name="mno"
+               required=""
+               maxlength="10"
+               placeholder="Mobile Number *"><br>
+        <textarea
+                name="address"
+                placeholder="Enter address *"
+                required=""></textarea><br><br>
+        <input type="submit" value="Register">
+        <center>
+            <span>
+                <h4 style="color: red;font-style:Arial,Helvetica,sans-serif;">{{ message }}</h4>
+                <a href="index">Go back to login page.</a>
+            </span>
+        </center>
+    </form>
+
+</div>
+
+</body>
+</html>

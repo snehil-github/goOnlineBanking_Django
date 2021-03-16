@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    {% include 'head.html' %}
+</head>
+<body>
+<!--{% include 'main_header.html' %}-->
+{% include 'customer_menu.html' %}
+    <div>
+        <form action="deposit" method="post" autocomplete="off">
+           <center><h2>Deposit Here</h2></center>
+            {% csrf_token %}
+
+            <input type="text"
+                   autofocus=""
+                   required=""
+                   name="amount"
+                   placeholder="Enter amount *"><br><br>
+            <input type="submit"
+                   value="Deposit"><br>
+            <center>
+                <h4 style="color: red;font-style:Arial,Helvetica,sans-serif;">{{ message }}</h4>
+            </center>
+        </form>
+    </div>
+
+</body>
+</html>

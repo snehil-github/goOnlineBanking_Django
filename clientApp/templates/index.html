@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+     {% include 'head.html' %}
+</head>
+<body>
+
+<!--    {% include 'main_header.html' %}-->
+    {% include 'main_menu.html' %}
+
+<div>
+
+
+    <form action="index" method="post" autocomplete="off">
+        <center><h2>Login Here</h2></center>
+        {% csrf_token %}
+        <input type="text"
+               autofocus=""
+               required=""
+               name="email"
+               placeholder="Email or Pone number"><br>
+        <input type="password"
+               name="pwd"
+               required=""
+               placeholder="Password"><br><br>
+        <input type="submit"
+               value="Login"><br>
+        <center>
+            <h4 style="color: red;font-style:Arial,Helvetica,sans-serif;">{{ message }}</h4>
+        </center>
+        <span>
+            <p>Don't have an account?</p><a href="register">Register</a>
+        </span>
+
+    </form>
+
+
+</div>
+
+</body>
+</html>

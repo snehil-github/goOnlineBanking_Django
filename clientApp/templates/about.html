@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+   {% include 'head.html' %}
+    {% load static %}
+</head>
+<body>
+<!--{% include 'main_header.html' %}-->
+{% include 'main_menu.html' %}
+
+    <div id="banner-container">
+        <div ><img id="banner-img" src="{% static 'images/banner-abt.jpg' %}"></div>
+    </div>
+
+    <div id="cont-div">
+        <h2>CONTACT US</h2>
+        <div id="about-div">
+            <h3>Our <b>Corporate Office.</b></h3>
+            <p>Axis Bank Limited, Corporate Office, Bombay Dyeing Mills Compound, Pandurang Budhkar Marg,Worli, Mumbai - 400 025</p>
+            <tel>Tel:(022) 2455 2555</tel>
+        </div>
+    </div>
+
+</body>
+</html>

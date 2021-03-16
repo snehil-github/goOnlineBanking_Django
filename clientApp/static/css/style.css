@@ -1,0 +1,280 @@
+body, html {
+    #background-color: rgba(255, 255, 255, 0.85);
+    background: #f2f2f2;
+    #font-family: 'Galdeano', sans-serif;
+    font-family: 'Merriweather Sans', sans-serif;
+    #font-family: 'Acme', sans-serif;
+    font-size: 14px;
+    margin: 0px;
+    padding: 0px;
+    max-width: 100%;
+    max-height: 100%;
+    text-align:center;
+    align:center;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+@font-face {
+    @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+}
+
+/** ###########Main Header Styling########## **/
+
+#header1 {
+    background:#ffffff;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    width:100%;
+
+}
+
+#img-con{
+    width: 15%;
+    border-radius:48%;
+    border: 1px solid black;
+    background-color: black;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: 5px 10px;
+    border-bottom: 1px solid black;
+    overflow: hidden;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px;
+    -webkit-box-pack: justify;
+    flex-direction: row;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    backdrop-filter: saturate(180%) blur(20px);
+    background-image: linear-gradient(#003333, #008080);
+    box-shadow: rgb(0 0 0 / 5%) 0px 1px 0px 0px;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: #ffffff;
+    font-family: 'Galdeano', sans-serif;
+    font-size: 17px;
+    #font-family: inherit;
+    text-align: center;
+    margin: 8px;
+    padding:2px;
+    text-decoration: none;
+}
+
+li a:hover {
+    color:red;
+    border-bottom: 1px solid red;
+
+}
+
+/** ###########Froms Styling########## **/
+
+ form {
+     justify-content: center;
+     #background:rgb(23, 170, 170);
+     background: #ffffff;
+     display: block;
+     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+     border-radius: 8px;
+     float: centre;
+     margin-top: 50px;
+     margin-left: auto;
+     margin-right: auto;
+     padding: 20px;
+     max-width:350px;
+}
+
+
+form h2{
+    #font-family: inherit;
+    font-family: 'Galdeano', sans-serif;
+    font-weight: initial;
+    font-size: 24px;
+    color: #ffffff;
+    width: 280px;
+    border-radius: 5px;
+    padding: 10px;
+    background-image: linear-gradient(#003333, #008080);
+    #background-color:rgba(0, 40, 77, 0.85);
+
+}
+
+input[type=text], select {
+    width: 300px;
+    padding: 12px 20px;
+    margin: 5px 0;
+    display: inline-block;
+    border: none;
+    outline: none;
+    border-bottom: solid 1px #d8d8d8;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: normal;
+    box-sizing: border-box;
+}
+
+input[type=password] {
+    width: 300px;
+    padding: 12px 20px;
+    margin: 5px 0;
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    border-bottom: solid 1px #d8d8d8;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+input[type=email] {
+    width: 300px;
+    padding: 12px 20px;
+    margin: 5px 0;
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    border-bottom: solid 1px #d8d8d8;
+    font-family: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 300px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+textarea {
+    width: 260px;
+    color: black;
+    padding: 14px 20px;
+    margin: 5px 0;
+    resize: none;
+    border: none;
+    outline: none;
+    border-bottom: solid 1px #d8d8d8;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+span {
+    display: block;
+    font-family: inherit;
+    color:#00000;
+}
+span > a {
+    color: #003366;
+    text-decoration: none;
+}
+
+/** ########### Users Styling########## **/
+
+#user-data {
+    float: left;
+    text-align: left;
+    margin:10px;
+    padding:50px;
+    display: block;
+    color: green;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    border-radius: 15px;
+
+
+}
+
+#user-data a{
+    color: #142952;
+}
+
+/** ###########About Us Styling########## **/
+
+#banner-container{
+    position: relative;
+    text-align: center;
+    color: white;
+    display: block;
+    background-image: linear-gradient(#008080, #008080);
+}
+
+#banner-img {
+    filter: blur(1px);
+  -webkit-filter: blur(1px);
+    width: 100%;
+    height:300px;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+#next_div {
+    width:100%;
+    height:100px;
+    background-color: black;
+}
+
+#cont-div h2 {
+    color: #ffffff;
+    background-image: linear-gradient(#008080, #003333);
+    padding:10px;
+    margin:0px;
+    font-size: 20px;
+    font-weight: initial;
+}
+
+#about-div {
+    float: left;
+    text-align: left;
+    width: 300px;
+    margin:10px;
+    margin-bottom:50px;
+    padding:50px;
+    display: block;
+    color: black;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    border-radius: 15px;
+}
+
+#about-div h3{
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 25px;
+    font-weight: initial;
+
+}
