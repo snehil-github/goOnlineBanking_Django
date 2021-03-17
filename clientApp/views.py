@@ -4,9 +4,10 @@ from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib import messages
 from django.shortcuts import render
 from random import randint
+from rest_framework.response import Response
 from clientApp.models import Customer, Record
-
-# from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
+from .serializers import CustomerSerializer
 
 
 # Create your views here.
@@ -64,7 +65,9 @@ def index(request):
 
                     # Creating Session Here
                     request.session['cus_Id'] = customer.id
-                    return render(request, "home.html", {"customer": customer})
+                    customer = Customer.objects.get(id=request.session['cus_Id'])
+                    serializers = CustomerSerializer(customer)
+                    return render(request, "home.html", {"serializers": serializers.data})
 
                 else:
                     message = "Please enter valid login details!"
@@ -90,10 +93,13 @@ def logout(request):
 
 
 # ******************** Logic for User Home Page ************************
+@api_view(['GET'])
 def home(request):
     if request.session.has_key('cus_Id'):
         customer = Customer.objects.get(id=request.session['cus_Id'])
-        return render(request, "home.html", {"customer": customer})
+        serializers = CustomerSerializer(customer)
+        # return Response(serializers.data)
+        return render(request, "home.html", {"serializers": serializers.data})
     else:
         return render(request, "index.html")
 

@@ -11,11 +11,12 @@
 
 
     <div id="user-data">
-        <p>Name : <a>{{ customer.name }}</a></p>
-        <p>E-mail : <a>{{ customer.email }}</a></p>
-        <p>Account Number : <a>{{ customer.accno }}</a></p>
-        <p>Account Balance : <a>{{ customer.balance }}</a></p>
+        <p><b>Name:</b> <a>{{ serializers.name }}</a></p>
+        <p><b>E-mail:</b> <a>{{ serializers.email }}</a></p>
+        <p><b>Account:</b> <a style="text-decoration:none;" href="deposit">{{ serializers.accno }}</a></p>
+        <p><b>Balance:</b> <a>{{ serializers.balance }}</a></p>
     </div>
+
 
 </body>
 </html>

@@ -209,9 +209,9 @@ span > a {
     float: left;
     text-align: left;
     margin:10px;
-    padding:50px;
+    padding:25px;
     display: block;
-    color: green;
+    color: #283747;
     background: #ffffff;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     border-radius: 15px;
@@ -220,7 +220,7 @@ span > a {
 }
 
 #user-data a{
-    color: #142952;
+    color: #34495E;
 }
 
 /** ###########About Us Styling########## **/
