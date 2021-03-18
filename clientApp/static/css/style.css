@@ -123,6 +123,48 @@ form h2{
 
 }
 
+#login-form>input[type=text] {
+    width: 300px;
+    margin: 5px 0;
+    padding:15px 5px 10px 5px;
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    opacity: .6;
+    border-bottom: solid 1px #d8d8d8;
+    border-radius:5px;
+    font-family: inherit;
+    font-size: 14px;
+    background-origin: content-box;
+    background-image: url('/static/images/email-usr.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 20px 20px;
+    text-indent: 25px;
+}
+
+#login-form>input[type=password] {
+    width: 300px;
+    margin: 5px 0;
+    padding:15px 5px 10px 5px;
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    opacity: .6;
+    border-bottom: solid 1px #d8d8d8;
+    border-radius:5px;
+    font-family: inherit;
+    font-size: 14px;
+    background-origin: content-box;
+    background-image: url('/static/images/pwd-usr.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 21px 21px;
+    text-indent: 25px;
+}
+
 input[type=text], select {
     width: 300px;
     padding: 12px 20px;
@@ -203,6 +245,38 @@ span > a {
     text-decoration: none;
 }
 
+/** ########### User Summary Data Styling########## **/
+
+table {
+     justify-content: center;
+     background: #ffffff;
+     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+     display: block;
+     overflow-x:auto;
+     float: centre;
+     margin-top: 50px;
+     margin-left: auto;
+     margin-right: auto;
+     text-align:centre;
+     padding: 2px;
+     max-width:50%;
+
+}
+table th{
+    padding: 10px;
+    color: #ffffff;
+    background-image: linear-gradient(#003333, #008080);
+}
+
+table td{
+    border-radius: 10px;
+    padding: 10px 53px 10px 53px;
+    background:  #b3e6ff;
+}
+table td:hover{
+    background: #4dc3ff;
+}
+
 /** ########### Users Styling########## **/
 
 #user-data {
@@ -215,7 +289,6 @@ span > a {
     background: #ffffff;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     border-radius: 15px;
-
 
 }
 

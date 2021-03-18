@@ -10,8 +10,8 @@
 {% include 'customer_menu.html' %}
 <div>
     <form action="withdrawal" method="post" autocomplete="off">
-       <center><h2>Withdrawal Here</h2></center>
         {% csrf_token %}
+       <center><h2>Withdrawal Here</h2></center>
 
         <input type="text"
                autofocus=""

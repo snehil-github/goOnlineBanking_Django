@@ -13,8 +13,8 @@
 
 <div>
     <form action="register" method="post">
+         {% csrf_token %}
         <center><h2>First Time User Registration</h2></center>
-        {% csrf_token %}
         <input type="text"
                name="name"
                required=""

@@ -10,8 +10,8 @@
 {% include 'customer_menu.html' %}
 <div>
     <form action="transfer" method="post" autocomplete="off" id="myInput">
-       <center><h2>Transfer Here</h2></center>
         {% csrf_token %}
+       <center><h2>Transfer Here</h2></center>
 
         <input type="text"
                autofocus=""

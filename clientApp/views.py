@@ -2,9 +2,9 @@ import datetime
 # import re
 from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib import messages
+# from rest_framework.response import Response
 from django.shortcuts import render
 from random import randint
-from rest_framework.response import Response
 from clientApp.models import Customer, Record
 from rest_framework.decorators import api_view
 from .serializers import CustomerSerializer
@@ -16,7 +16,7 @@ def register(request):
 
     if request.method == 'POST':
         name = request.POST['name']
-        email = request.POST['email']
+        email = request.POST['email'].lower()
         mno = request.POST['mno']
         pwd1 = request.POST['pwd1']
         pwd2 = request.POST['pwd2']
@@ -57,14 +57,16 @@ def register(request):
 
 def index(request):
     if request.method == 'POST':
-
+        email = request.POST['email'].lower()
+        pwd = request.POST['pwd']
         try:
-            if Customer.objects.filter(email=request.POST['email']).exists():
-                if Customer.objects.filter(email=request.POST['email'], pwd=request.POST['pwd']).exists():
-                    customer = Customer.objects.get(email=request.POST['email'], pwd=request.POST['pwd'])
+            if Customer.objects.filter(email=email).exists():
+                if Customer.objects.filter(email=email, pwd=pwd).exists():
+                    customer = Customer.objects.get(email=email, pwd=pwd)
 
                     # Creating Session Here
                     request.session['cus_Id'] = customer.id
+                    # Serializing customer object.
                     customer = Customer.objects.get(id=request.session['cus_Id'])
                     serializers = CustomerSerializer(customer)
                     return render(request, "home.html", {"serializers": serializers.data})
@@ -98,15 +100,26 @@ def home(request):
     if request.session.has_key('cus_Id'):
         customer = Customer.objects.get(id=request.session['cus_Id'])
         serializers = CustomerSerializer(customer)
-        # return Response(serializers.data)
         return render(request, "home.html", {"serializers": serializers.data})
     else:
         return render(request, "index.html")
 
 
 # ******************* Logic for account summary ************************
-# def accnt_smry(request):
-#     return render(request, "home.html")
+def summary(request):
+    if request.session.has_key('cus_Id'):
+        customer = Customer.objects.get(id=request.session['cus_Id'])
+
+        if Record.objects.filter(accno=customer.accno).exists():
+            records = Record.objects.filter(accno=customer.accno)
+            print(records)
+            return render(request, "summary.html", {"records": records})
+        else:
+            message = "Summary does not exists."
+            return render(request, "home.html", {"message": message})
+    else:
+        print("Session is expired.")
+        return render(request, "home.html")
 
 
 # **********************Logic for Deposit Amount ***********************
@@ -218,26 +231,34 @@ def transfer(request):
 
                 if Customer.objects.filter(accno=rcr_account_num).exists():
                     transfer_amount = int(request.POST['amount'])
-                    sender_customer_ = Customer.objects.get(id=request.session['cus_Id'])
+                    sender_customer = Customer.objects.get(id=request.session['cus_Id'])
                     receiver_customer = Customer.objects.get(accno=rcr_account_num)
 
                     if transfer_amount > 0:
-                        if sender_customer_.balance != 0 and sender_customer_.balance >= transfer_amount:
-                            sender_balance = int(sender_customer_.balance - transfer_amount)
+                        if sender_customer.balance != 0 and sender_customer.balance >= transfer_amount:
+                            sender_balance = int(sender_customer.balance - transfer_amount)
                             receiver_balance = int(receiver_customer.balance + transfer_amount)
                             current_date = datetime.datetime.now().strftime('%d/%m/%y %H:%M:%S')
 
                             if Record.objects.filter(cus_id=request.session['cus_Id']).exists():
                                 sndr_temp = Customer(id=request.session['cus_Id'], balance=sender_balance)
                                 rcr_temp = Customer(id=receiver_customer.id, balance=receiver_balance)
-                                record_temp = Record(cus_id=request.session['cus_Id'],
-                                                     accno=sender_customer_.accno,
-                                                     status='Transfer',
-                                                     rdate=current_date,
-                                                     amount=transfer_amount,
-                                                     bal=sender_balance
-                                                     )
-                                record_temp.save()
+                                record_temp_from = Record(cus_id=request.session['cus_Id'],
+                                                          accno=sender_customer.accno,
+                                                          status='Transfer',
+                                                          rdate=current_date,
+                                                          amount=transfer_amount,
+                                                          bal=sender_balance
+                                                          )
+                                record_temp_to = Record(cus_id=receiver_customer.id,
+                                                        accno=receiver_customer.accno,
+                                                        status='Deposit',
+                                                        rdate=current_date,
+                                                        amount=transfer_amount,
+                                                        bal=receiver_balance
+                                                        )
+                                record_temp_from.save()
+                                record_temp_to.save()
                                 rcr_temp.save(update_fields=['balance'])
                                 sndr_temp.save(update_fields=['balance'])
                                 message = "Amount Transferred Successfully."

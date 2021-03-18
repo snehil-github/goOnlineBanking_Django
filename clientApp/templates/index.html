@@ -13,10 +13,9 @@
 
 <div>
 
-
-    <form action="index" method="post" autocomplete="off">
-        <center><h2>Login Here</h2></center>
+    <form action="index" method="post" autocomplete="off" id="login-form">
         {% csrf_token %}
+        <center><h2>Login Here</h2></center>
         <input type="text"
                autofocus=""
                required=""
@@ -34,9 +33,7 @@
         <span>
             <p>Don't have an account?</p><a href="register">Register</a>
         </span>
-
     </form>
-
 
 </div>
 

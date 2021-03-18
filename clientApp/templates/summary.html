@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    {% include 'head.html' %}
+</head>
+<body>
+<!--{% include 'main_header.html' %}-->
+{% include 'customer_menu.html' %}
+
+
+    <div id="summary-data">
+        <table>
+            <tr>
+                <th>Status</th>
+                <th>Date & Time</th>
+                <th>Amount</th>
+                <th>Balance</th>
+            </tr>
+            {% for rec in records %}
+            <tr>
+                <td>{{ rec.status }}</td>
+                <td>{{ rec.rdate }}</td>
+                <td>{{ rec.amount }}</td>
+                <td>{{ rec.bal }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+</body>
+</html>
