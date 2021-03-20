@@ -1,5 +1,6 @@
 import datetime
 # import re
+from clientApp import excel
 from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib import messages
 # from rest_framework.response import Response
@@ -63,7 +64,6 @@ def index(request):
             if Customer.objects.filter(email=email).exists():
                 if Customer.objects.filter(email=email, pwd=pwd).exists():
                     customer = Customer.objects.get(email=email, pwd=pwd)
-
                     # Creating Session Here
                     request.session['cus_Id'] = customer.id
                     # Serializing customer object.
@@ -100,6 +100,7 @@ def home(request):
     if request.session.has_key('cus_Id'):
         customer = Customer.objects.get(id=request.session['cus_Id'])
         serializers = CustomerSerializer(customer)
+        # excel.excel_generator()
         return render(request, "home.html", {"serializers": serializers.data})
     else:
         return render(request, "index.html")
@@ -112,7 +113,6 @@ def summary(request):
 
         if Record.objects.filter(accno=customer.accno).exists():
             records = Record.objects.filter(accno=customer.accno)
-            print(records)
             return render(request, "summary.html", {"records": records})
         else:
             message = "Summary does not exists."
@@ -129,35 +129,34 @@ def deposit(request):
         if request.method == 'POST':
             deposit_amount = int(request.POST['amount'])
             current_date = datetime.datetime.now().strftime('%d/%m/%y %H:%M:%S')
-            customer_ = Customer.objects.get(id=request.session['cus_Id'])
-            balance = customer_.balance + deposit_amount
+            customer_temp = Customer.objects.get(id=request.session['cus_Id'])
 
             if Record.objects.filter(cus_id=request.session['cus_Id']).exists():
-                customer_temp = Customer(id=request.session['cus_Id'], balance=balance)
                 record_temp = Record(cus_id=request.session['cus_Id'],
-                                     accno=customer_.accno,
+                                     accno=customer_temp.accno,
                                      status='Deposit',
                                      rdate=current_date,
                                      amount=deposit_amount,
-                                     bal=balance
+                                     bal=customer_temp.balance + deposit_amount
                                      )
-                customer_temp.save(update_fields=['balance'])
+                customer_temp.balance += deposit_amount
                 record_temp.save()
+                customer_temp.save()
                 message = "Amount Deposited Successfully."
                 return render(request, "deposit.html", {"message": message})
 
             else:
                 print("Record doe's not exists.")
-                customer_temp = Customer(id=request.session['cus_Id'], balance=balance)
                 record_temp = Record(cus_id=request.session['cus_Id'],
-                                     accno=customer_.accno,
+                                     accno=customer_temp.accno,
                                      status='Deposit',
                                      rdate=current_date,
                                      amount=deposit_amount,
-                                     bal=int(deposit_amount)
+                                     bal=deposit_amount
                                      )
-                customer_temp.save(update_fields=['balance'])
+                customer_temp.balance += deposit_amount
                 record_temp.save()
+                customer_temp.save()
                 message = "Amount Deposited Successfully."
                 return render(request, "deposit.html", {"message": message})
 
@@ -176,38 +175,24 @@ def withdrawal(request):
         if request.method == 'POST':
             current_date = datetime.datetime.now().strftime('%d/%m/%y %H:%M:%S')
             withdrawal_amount = int(request.POST['amount'])
-            customer_ = Customer.objects.get(id=request.session['cus_Id'])
-            balance = customer_.balance - withdrawal_amount
+            customer_temp = Customer.objects.get(id=request.session['cus_Id'])
+            # balance = customer_.balance - withdrawal_amount
 
-            if customer_.balance != 0 and customer_.balance >= withdrawal_amount:
+            if customer_temp.balance != 0 and customer_temp.balance >= withdrawal_amount:
                 if Record.objects.filter(cus_id=request.session['cus_Id']).exists():
-                    customer_temp = Customer(id=request.session['cus_Id'], balance=balance)
                     record_temp = Record(cus_id=request.session['cus_Id'],
-                                         accno=customer_.accno,
+                                         accno=customer_temp.accno,
                                          status='Withdrawal',
                                          rdate=current_date,
                                          amount=withdrawal_amount,
-                                         bal=balance
+                                         bal=customer_temp.balance - withdrawal_amount
                                          )
+                    customer_temp.balance -= withdrawal_amount
                     record_temp.save()
-                    customer_temp.save(update_fields=['balance'])
+                    customer_temp.save()
                     message = "Amount Withdrawal Successfully."
                     return render(request, "withdrawal.html", {"message": message})
 
-                else:
-                    print("Record doe's not exists.")
-                    customer_temp = Customer(id=request.session['cus_Id'], balance=balance)
-                    record_temp = Record(cus_id=request.session['cus_Id'],
-                                         accno=customer_.accno,
-                                         status='Withdrawal',
-                                         rdate=current_date,
-                                         amount=withdrawal_amount,
-                                         bal=int(withdrawal_amount)
-                                         )
-                    customer_temp.save(update_fields=['balance'])
-                    record_temp.save()
-                    message = "Amount Withdrawal Successfully."
-                    return render(request, "withdrawal.html", {"message": message})
             else:
                 message = "Insufficient Amount!!"
                 return render(request, "withdrawal.html", {"message": message})
@@ -231,36 +216,35 @@ def transfer(request):
 
                 if Customer.objects.filter(accno=rcr_account_num).exists():
                     transfer_amount = int(request.POST['amount'])
-                    sender_customer = Customer.objects.get(id=request.session['cus_Id'])
-                    receiver_customer = Customer.objects.get(accno=rcr_account_num)
+                    sender_temp = Customer.objects.get(id=request.session['cus_Id'])
+                    receiver_temp = Customer.objects.get(accno=rcr_account_num)
 
                     if transfer_amount > 0:
-                        if sender_customer.balance != 0 and sender_customer.balance >= transfer_amount:
-                            sender_balance = int(sender_customer.balance - transfer_amount)
-                            receiver_balance = int(receiver_customer.balance + transfer_amount)
+
+                        if sender_temp.balance != 0 and sender_temp.balance >= transfer_amount:
                             current_date = datetime.datetime.now().strftime('%d/%m/%y %H:%M:%S')
 
                             if Record.objects.filter(cus_id=request.session['cus_Id']).exists():
-                                sndr_temp = Customer(id=request.session['cus_Id'], balance=sender_balance)
-                                rcr_temp = Customer(id=receiver_customer.id, balance=receiver_balance)
                                 record_temp_from = Record(cus_id=request.session['cus_Id'],
-                                                          accno=sender_customer.accno,
+                                                          accno=sender_temp.accno,
                                                           status='Transfer',
                                                           rdate=current_date,
                                                           amount=transfer_amount,
-                                                          bal=sender_balance
+                                                          bal=sender_temp.balance - transfer_amount
                                                           )
-                                record_temp_to = Record(cus_id=receiver_customer.id,
-                                                        accno=receiver_customer.accno,
+                                record_temp_to = Record(cus_id=receiver_temp.id,
+                                                        accno=receiver_temp.accno,
                                                         status='Deposit',
                                                         rdate=current_date,
                                                         amount=transfer_amount,
-                                                        bal=receiver_balance
+                                                        bal=receiver_temp.balance + transfer_amount
                                                         )
+                                sender_temp.balance -= transfer_amount
+                                receiver_temp.balance += transfer_amount
                                 record_temp_from.save()
                                 record_temp_to.save()
-                                rcr_temp.save(update_fields=['balance'])
-                                sndr_temp.save(update_fields=['balance'])
+                                sender_temp.save()
+                                receiver_temp.save()
                                 message = "Amount Transferred Successfully."
                                 return render(request, "transfer.html", {"message": message})
 
