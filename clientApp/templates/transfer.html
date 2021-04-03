@@ -12,7 +12,7 @@
     <form action="transfer" method="post" autocomplete="off" id="myInput">
         {% csrf_token %}
        <center><h2>Transfer Here</h2></center>
-
+        <br>
         <input type="text"
                autofocus=""
                required=""
@@ -31,7 +31,7 @@
         <input type="submit"
                value="Transfer"><br>
         <center>
-            <h4 style="color: red;font-style:Arial,Helvetica,sans-serif;">{{ message }}</h4>
+            <h4>{{ message }}</h4>
         </center>
     </form>
     <script>

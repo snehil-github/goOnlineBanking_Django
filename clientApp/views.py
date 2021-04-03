@@ -1,6 +1,6 @@
 import datetime
 # import re
-from clientApp import excel
+from clientApp import excelService
 from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib import messages
 # from rest_framework.response import Response
@@ -100,7 +100,7 @@ def home(request):
     if request.session.has_key('cus_Id'):
         customer = Customer.objects.get(id=request.session['cus_Id'])
         serializers = CustomerSerializer(customer)
-        # excel.excel_generator()
+        # excelService.excel_generator()
         return render(request, "home.html", {"serializers": serializers.data})
     else:
         return render(request, "index.html")

@@ -9,10 +9,10 @@ class Customer(models.Model):
     email = models.CharField(max_length=50)
     pwd = models.CharField(max_length=50)
     mno = models.CharField(max_length=10)
-    address = models.CharField(max_length=50)
+    address = models.CharField(max_length=100)
     balance = models.IntegerField(null=True, blank=True)
-    accno = models.IntegerField(null=True, blank=True)
-    atmno = models.IntegerField(null=True, blank=True)
+    accno = models.BigIntegerField(null=True, blank=True)
+    atmno = models.BigIntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -26,7 +26,7 @@ class Record(models.Model):
     objects = None
     cus_id = models.IntegerField()
     status = models.CharField(max_length=50)
-    accno = models.IntegerField()
+    accno = models.BigIntegerField()
     rdate = models.CharField(max_length=50)
     amount = models.IntegerField(null=True, blank=True)
     bal = models.IntegerField(null=True, blank=True)

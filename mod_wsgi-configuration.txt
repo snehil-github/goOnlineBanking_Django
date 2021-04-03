@@ -1,0 +1,66 @@
+1. Download Links:
+
+Apache :- https://www.apachelounge.com/download/
+Visual Studio Build Tool C++ :- https://visualstudio.microsoft.com/
+****************************************************************************************
+2. Some handfull links for configuring mod_wsgi and deploying djano app:
+
+https://github.com/django/asgiref/issues/143
+https://modwsgi.readthedocs.io/en/master/
+https://docs.djangoproject.com/en/3.1/howto/deployment/wsgi/modwsgi/
+****************************************************************************************
+3. mod_wsgi installation:
+
+After installing Apache and build tool install mod_wsgi in your project diectory by following command.
+>> pip install mod_wsgi
+Then get output of >> mod_wsgi-express config-module 
+--------------------------------------------------------------
+Set path to apache root directory on system.
+set MOD_WSGI_APACHE_ROOTDIR = "C:\Apache24"
+****************************************************************************************
+4. Django project setting to copied in httpd.conf file on apache:  
+
+# Django Project
+# Apache httpd.conf settings 
+
+LoadModule wsgi_module "D:/work-book/python_projects/goonlinebank/myvenv/lib/site-packages/mod_wsgi/server/mod_wsgi.cp39-win_amd64.pyd" //wsgi-file path from above command output. 
+LoadFile "D:/Work-Book/Python_Projects/goOnlineBank/myVenv/Scripts/python39.dll" 				//Python dll file. 
+#WSGIPythonHome "D:/Work-Book/Python_Projects/goOnlineBank/myVenv" 					//Python home folder path if python installed on virtual environment.
+WSGIPythonHome "C:/Python/Python_391" 								//Python home folder path.
+WSGIPythonPath "D:/Work-Book/Python_Projects/goOnlineBank/myVenv/Lib/site-packages"			//Python libraries path for your project.
+<virtualhost *:80>
+	WSGIScriptAlias / "D:/Work-Book/Python_Projects/goOnlineBank/goOnlineBank/wsgi.py"
+	Alias /static D:/Work-Book/Python_Projects/goOnlineBank/clientApp/static
+		<directory D:/Work-Book/Python_Projects/goOnlineBank/clientApp/static>
+			Require all granted
+		</directory> 
+	<directory "D:/Work-Book/Python_Projects/goOnlineBank">
+		<files wsgi.py>
+			Require all granted
+		</files>
+	</directory>
+</virtualhost> 
+
+****************************************************************************************
+5. After copying below line in config file restart the apache server.
+
+Apache bin folder >>httpd.exe -k restart 	//Via cmd administrator mode.
+****************************************************************************************
+6. Changes in settings.py of your django application.
+
+DEBUG = False
+MIDDLEWARE = [
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
+]
+STATIC_ROOT = os.path.join(BASE_DIR, '/clientApp/static')
+STATICFILES = [STATIC_ROOT]
+****************************************************************************************
+7. Add these lines in asgiref > init.py file:
+ 
+asgiref > add below lines in init.py 
+import sys
+import asyncio
+
+if sys.platform == "win32" and sys.version_info >= (3, 9, 1):
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+****************************************************************************************

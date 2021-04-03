@@ -14,39 +14,39 @@
 <div>
     <form action="register" method="post">
          {% csrf_token %}
-        <center><h2>First Time User Registration</h2></center>
+        <center><h2>First Time User Registration</h2></center><br>
         <input type="text"
                name="name"
                required=""
                placeholder="Name *"
-               autofocus=""><br>
+               autofocus="">
         <input type="email"
                name="email"
                required=""
-               placeholder="Email *"><br>
+               placeholder="Email *">
         <input type="password"
                name="pwd1"
                required=""
-               placeholder="Enter Password *"><br>
+               placeholder="Enter Password *">
         <input type="password"
                name="pwd2"
                required=""
-               placeholder="Re-enter Password *"><br>
+               placeholder="Re-enter Password *">
         <input type="text"
                name="mno"
                required=""
                maxlength="10"
-               placeholder="Mobile Number *"><br>
+               placeholder="Mobile Number *">
         <textarea
                 name="address"
                 placeholder="Enter address *"
-                required=""></textarea><br><br>
+                required=""></textarea>
         <input type="submit" value="Register">
         <center>
-            <span>
-                <h4 style="color: red;font-style:Arial,Helvetica,sans-serif;">{{ message }}</h4>
+            <div id="form-footer">
+                <h4>{{ message }}</h4>
                 <a href="index">Go back to login page.</a>
-            </span>
+            </div>
         </center>
     </form>
 

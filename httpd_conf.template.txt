@@ -1,0 +1,37 @@
+# Settings to add to C:/Apache24/conf/httpd.conf
+# update as needed
+
+#
+# ServerName gives the name and port that the server uses to identify itself.
+# This can often be determined automatically, but we recommend you specify
+# it explicitly to prevent problems during startup.
+#
+# If your host doesn't have a registered DNS name, enter its IP address here.
+#
+# ServerName localhost:80 # use this if you're running this on a VirtualBox VM or PC
+#ServerName localhost:80
+
+
+# Django Project
+
+LoadModule wsgi_module "D:/work-book/python_projects/goonlinebank/myvenv/lib/site-packages/mod_wsgi/server/mod_wsgi.cp39-win_amd64.pyd"
+LoadFile "D:/Work-Book/Python_Projects/goOnlineBank/myVenv/Scripts/python39.dll"
+#WSGIPythonHome "D:/Work-Book/Python_Projects/goOnlineBank/myVenv"
+WSGIPythonHome "C:/Python/Python_391"
+WSGIPythonPath "D:/Work-Book/Python_Projects/goOnlineBank/myVenv/Lib/site-packages"
+
+<virtualhost *:80>
+
+	WSGIScriptAlias / "D:/Work-Book/Python_Projects/goOnlineBank/goOnlineBank/wsgi.py"
+	Alias /static D:/Work-Book/Python_Projects/goOnlineBank/clientApp/static
+
+	<directory D:/Work-Book/Python_Projects/goOnlineBank/clientApp/static>
+		Require all granted
+	</directory>
+
+	<directory "D:/Work-Book/Python_Projects/goOnlineBank">
+		<files wsgi.py>
+			Require all granted
+		</files>
+	</directory>
+</virtualhost>

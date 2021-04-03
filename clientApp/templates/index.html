@@ -15,7 +15,7 @@
 
     <form action="index" method="post" autocomplete="off" id="login-form">
         {% csrf_token %}
-        <center><h2>Login Here</h2></center>
+        <center><h2>Login Here</h2></center><br>
         <input type="text"
                autofocus=""
                required=""
@@ -28,11 +28,11 @@
         <input type="submit"
                value="Login"><br>
         <center>
-            <h4 style="color: red;font-style:Arial,Helvetica,sans-serif;">{{ message }}</h4>
+                <h4>{{ message }}</h4>
         </center>
-        <span>
+        <div id="form-footer">
             <p>Don't have an account?</p><a href="register">Register</a>
-        </span>
+        </div>
     </form>
 
 </div>

@@ -12,7 +12,7 @@
         <form action="deposit" method="post" autocomplete="off">
             {% csrf_token %}
             <center><h2>Deposit Here</h2></center>
-
+            <br>
             <input type="text"
                    autofocus=""
                    required=""
@@ -21,7 +21,7 @@
             <input type="submit"
                    value="Deposit"><br>
             <center>
-                <h4 style="color: red;font-style:Arial,Helvetica,sans-serif;">{{ message }}</h4>
+                <h4>{{ message }}</h4>
             </center>
         </form>
     </div>
